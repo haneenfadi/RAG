@@ -1,7 +1,8 @@
-import utils.fetcher as f
-import utils.web_scraber as s
-from config.settings import settings
-import utils.pdf_extractor as p
+# python -m src.main
+from src.config.settings import settings
+import src.utils.fetcher as f
+import src.utils.web_scraber as s
+import src.utils.pdf_extractor as p
 
 
 def parse_pdf():

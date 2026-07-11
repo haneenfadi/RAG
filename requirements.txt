@@ -1,5 +1,8 @@
 pymupdf
 playwright
 beautifulsoup4
-
+pydantic
+sentence-transformers
+langchain-text-splitters
+chromadb
 # After installing dependencies, run: playwright install

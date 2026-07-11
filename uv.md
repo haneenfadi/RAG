@@ -1,6 +1,6 @@
 ### Why I used uv instead of venv + pip
 
-I used `uv` as a modern alternative to the traditional `venv` + `pip` workflow. While `venv` only handles environment creation and `pip` installs packages, `uv` combines both into a single tool and provides a more reliable dependency management system.
+I used `uv` as a modern alternative to the traditional `venv` + `pip` workflow. While `venv` only handles environment creation and `pip` installs packages, `uv` combines both into a single tool and provides a more reliable dependency management system. 
 
 The key advantage is that `uv` resolves and locks dependency versions consistently, which prevents conflicts between packages and ensures reproducible environments across development and deployment. In contrast, using `pip` alone can lead to unexpected issues when dependencies change or conflict.
 

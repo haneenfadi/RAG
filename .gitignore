@@ -1,3 +1,8 @@
 RAG
 __pycache__
 .env
+long_articls_chunker.py
+fixed_chunker.py
+word_based_chunk.json
+semantic_chunks.json
+test_reranker.py
