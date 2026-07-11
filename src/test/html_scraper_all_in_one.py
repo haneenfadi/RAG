@@ -1,6 +1,6 @@
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
-
+import json
 url = "https://www.lob.gov.jo/?v=1&lang=ar#!/DraftDetails?DraftID=10760"
 
 
@@ -18,7 +18,7 @@ def scrape_page(url):
 
     # parse
     soup = BeautifulSoup(html, "html.parser")
-    with open("src/data/raw/scrape_page_html.html", "w", encoding="utf-8") as f:
+    with open("src/data/scrape_page_html.html", "w", encoding="utf-8") as f:
         f.write(html)
     content = soup.select_one("p.DraftDetails")
 
@@ -28,16 +28,15 @@ def scrape_page(url):
         text = "NOT FOUND"
 
     return {
-        "text": text,
-        "metadata": {
-            "source": "lob.gov.jo",
-            "type": "law",
-            "language": "ar"
-        }
+        "source": "lob.gov.jo",
+        "type": "html",
+        "language": "ar",
+        "text": text
+
     }
 
 
 scraped_data = scrape_page(url)
 
-with open("src/test/outputs/scrape_page_output.txt", "w", encoding="utf-8") as f:
-    f.write(str(scraped_data))
+with open("src/data/raw/html_extracted.json", "w", encoding="utf-8") as f:
+    json.dump(scraped_data, f, ensure_ascii=False, indent=4)
