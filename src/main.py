@@ -11,8 +11,8 @@ def parse_pdf():
 
 
 def scrape_web():
-    html = f.fetch_page(settings.url["lob"])
-    result = s.parse_lob(html)
+    html = f.fetch_page(settings.url["ssc"])
+    result = s.parse_html(html)
     print(result)
 
 

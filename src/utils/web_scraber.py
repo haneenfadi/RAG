@@ -1,20 +1,28 @@
 from bs4 import BeautifulSoup
+import json
 
 
-def parse_lob(html):
+def parse_html(html):
     soup = BeautifulSoup(html, "html.parser")
 
-    content = soup.select_one("p.DraftDetails")
-
+    content = soup.select(".elementor-accordion-item")
     if content:
-        text = content.get_text(separator="\n")
+
+        all_text = []
+        for item in content:
+            text = item.get_text(separator="\n", strip=True)
+            all_text.append(text)
+
     else:
         text = "NOT FOUND"
 
+    with open("src/data/extracted/social_security_faq.json", "w", encoding="utf-8") as f:
+        json.dump(all_text, f, ensure_ascii=False, indent=4)
+
     return {
-        "text": text,
+        "text": all_text,
         "metadata": {
-            "source": "lob.gov.jo",
+            "source": "ssc.gov.jo",
             "type": "law",
             "language": "ar"
         }

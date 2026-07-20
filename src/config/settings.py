@@ -1,7 +1,7 @@
 class settings:
 
     url = {
-        "lob": "https://www.lob.gov.jo/?v=1&lang=ar#!/DraftDetails?DraftID=10760",
+        "ssc": "https://www.ssc.gov.jo/%D8%A3%D8%B3%D8%A6%D9%84%D8%A9-%D8%B9%D8%A7%D9%85%D8%A9/"
     }
 
     pdf = {

@@ -5,9 +5,9 @@ import chromadb
 model = SentenceTransformer("intfloat/multilingual-e5-base")
 
 # connect to Chroma
-client = chromadb.PersistentClient(path="src/chroma/chroma_db")
+client = chromadb.PersistentClient(path="src/embedding/chroma_db")
 
-collection = client.get_collection("labor_law")
+collection = client.get_collection("legal_rag")
 
 #  "ما هو عقد التدريب"
 #  "العمل الموسمي"
@@ -17,7 +17,7 @@ collection = client.get_collection("labor_law")
 # "من هم المستثنون من القانون؟"
 # "العمل الموسمي"
 
-query = "هل يجوز استقدام عامل غير اردني؟"
+query = "هل يوجد تأمين لإصابات العمل؟"  # "هل يجوز استقدام عامل غير اردني؟"
 
 # embedding the query
 query_embedding = model.encode(

@@ -1,42 +1,45 @@
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 import json
-url = "https://www.lob.gov.jo/?v=1&lang=ar#!/DraftDetails?DraftID=10760"
+
+url = "https://www.ssc.gov.jo/%D8%A3%D8%B3%D8%A6%D9%84%D8%A9-%D8%B9%D8%A7%D9%85%D8%A9/"
 
 
 def scrape_page(url):
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)
+
         page = browser.new_page()
-
-        page.goto(url)
-
-        page.wait_for_selector("p.DraftDetails")
+        page.goto(url, wait_until="domcontentloaded")
 
         html = page.content()
         browser.close()
 
-    # parse
-    soup = BeautifulSoup(html, "html.parser")
-    with open("src/data/scrape_page_html.html", "w", encoding="utf-8") as f:
-        f.write(html)
-    content = soup.select_one("p.DraftDetails")
+        # parse
+        soup = BeautifulSoup(html, "html.parser")
+        content = soup.select(".elementor-accordion-item")
 
-    if content:
-        text = content.get_text(separator="\n")
-    else:
-        text = "NOT FOUND"
+        if content:
 
-    return {
-        "source": "lob.gov.jo",
-        "type": "html",
-        "language": "ar",
-        "text": text
+            all_text = []
+            for item in content:
+                text = item.get_text(separator="\n", strip=True)
+                all_text.append(text)
 
-    }
+        else:
+            text = "NOT FOUND"
+
+        return {
+            "text": all_text,
+            "metadata": {
+                "source": "ssc.gov.jo",
+                "type": "law",
+                "language": "ar"
+            }
+        }
 
 
 scraped_data = scrape_page(url)
 
-with open("src/data/raw/html_extracted.json", "w", encoding="utf-8") as f:
+with open("src/data/extracted/social_security_faq.json", "w", encoding="utf-8") as f:
     json.dump(scraped_data, f, ensure_ascii=False, indent=4)
