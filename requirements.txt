@@ -5,4 +5,6 @@ pydantic
 sentence-transformers
 langchain-text-splitters
 chromadb
+python-dotenv
+groq
 # After installing dependencies, run: playwright install
