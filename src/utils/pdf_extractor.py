@@ -28,5 +28,5 @@ def extract_text_from_pdf():
 
 print(extract_text_from_pdf())
 
-with open("src/data/raw/pdf_extracted.json", "w", encoding="utf-8") as f:
+with open("src/data/extracted/pdf_extracted.json", "w", encoding="utf-8") as f:
     json.dump(extract_text_from_pdf(), f, ensure_ascii=False, indent=4)

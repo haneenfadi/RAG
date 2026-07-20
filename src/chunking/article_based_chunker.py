@@ -10,7 +10,7 @@ import re
 
 full_text = ""
 
-with open("src/data/raw/pdf_extracted.json", "r", encoding="utf-8") as r:
+with open("src/data/extracted/pdf_extracted.json", "r", encoding="utf-8") as r:
     data = json.load(r)
 
     for page in data["pages"]:
@@ -36,7 +36,7 @@ for article_text in article_texts:
         continue
 
     num_match = re.search(r'المادة\s*(\d+)', article_text)
-    article_num = num_match.group(1) if num_match else "unknown"
+    article_num = num_match.group(1) if num_match else "title"
 
     word_count = len(article_text.split())
     article_sizes.append(word_count)
@@ -59,13 +59,15 @@ for article_text in article_texts:
         continue
 
     num_match = re.search(r'المادة\s*(\d+)', article_text)
-    article_num = num_match.group(1) if num_match else "unknown"
+    if not num_match:
+        continue
+    article_num = num_match.group(1)
 
     all_chunks.append(
         Document(
             page_content=article_text,
             metadata={
-                "article_number": article_num
+                "chunk_id": f"law_article_{article_num}", "type": "law_article", "source": "قانون العمل الأردني"
             }
         )
     )
@@ -75,11 +77,11 @@ print("-" * 60)
 
 for doc in all_chunks:
     words = len(doc.page_content.split())
-    article = doc.metadata["article_number"]
+    chunk_id = doc.metadata["chunk_id"]
     chunk = doc.metadata.get("chunk_index", 0)
 
     print(
-        f"Article {article} "
+        f"Chunk ID: {chunk_id} "
         f"Chunk {chunk} "
         f"Length: {words} words"
     )
