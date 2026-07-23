@@ -18,3 +18,7 @@ class PDFExtractResult(BaseModel):
     type: str
     language: str
     pages: list[PDFPage]
+
+
+class AskQuestionRequest(BaseModel):
+    question: str

@@ -7,4 +7,5 @@ langchain-text-splitters
 chromadb
 python-dotenv
 groq
+loguru
 # After installing dependencies, run: playwright install
