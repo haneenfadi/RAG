@@ -22,3 +22,18 @@ class PDFExtractResult(BaseModel):
 
 class AskQuestionRequest(BaseModel):
     question: str
+
+
+class Source(BaseModel):
+    source: str
+    reference: str
+
+
+class RagResponse(BaseModel):
+    answer: str
+    sources: list[Source] = []
+
+
+class AskQuestionResponse(BaseModel):
+    question: str
+    rag_response: RagResponse

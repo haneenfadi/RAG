@@ -7,3 +7,4 @@ word_based_chunk.json
 semantic_chunks.json
 src/chunking/evaluate_chunking
 semantic_chunker.py
+src/models
