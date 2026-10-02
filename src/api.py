@@ -1,11 +1,14 @@
+from fastapi.responses import RedirectResponse
 import os
 import chromadb
 from fastapi import FastAPI
-from sentence_transformers import CrossEncoder, SentenceTransformer
+from sentence_transformers import SentenceTransformer
 from src.routes.health import health_router
 from src.routes.rag_route import rag_router
 from groq import AsyncGroq
 from src.config.settings import Settings
+from optimum.onnxruntime import ORTModelForSequenceClassification
+from transformers import AutoTokenizer
 
 app = FastAPI(title="Legal RAG API",
               description="API for Legal RAG",
@@ -21,11 +24,18 @@ async def startup():
         path="src/embedding/chroma_db")
     app.state.collection = app.state.chromadb.get_collection("legal_rag")
     app.state.groq_client = AsyncGroq(api_key=Settings.groq_api_key)
-    app.state.reranker_model = CrossEncoder(
-        "BAAI/bge-reranker-v2-m3",    device="cpu"
-        # "BAAI/bge-reranker-base"
+    app.state.tokenizer = AutoTokenizer.from_pretrained(
+        "BAAI/bge-reranker-v2-m3", max_length=1024
+    )
+    app.state.reranker_model = ORTModelForSequenceClassification.from_pretrained(
+        "src/models/bge-reranker-v2-m3-onnx",
+        file_name="model.onnx"
     )
 
+
+@app.get("/", include_in_schema=False)
+async def root():
+    return RedirectResponse(url="/docs")
 
 app.include_router(health_router)
 app.include_router(rag_router)
