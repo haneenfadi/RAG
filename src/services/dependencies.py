@@ -8,5 +8,6 @@ def get_rag_service(request: Request):
         embedding_model=request.app.state.embedding_model,
         collection=request.app.state.collection,
         groq_client=request.app.state.groq_client,
+        tokenizer=request.app.state.tokenizer,
         reranker_model=request.app.state.reranker_model
     )

@@ -13,11 +13,13 @@ class RAGService:
         collection,
         groq_client,
         reranker_model,
+        tokenizer
     ):
         self.embedding_model = embedding_model
         self.collection = collection
         self.groq_client = groq_client
         self.reranker_model = reranker_model
+        self.tokenizer = tokenizer
 
     async def ask_question(self, question: str):
         start = time.perf_counter()
@@ -33,12 +35,14 @@ class RAGService:
         # retrieval
         t2 = time.perf_counter()
 
-        context = retrieve_context(
+        context = await retrieve_context(
             self.collection,
             question,
             embedding,
-            self.reranker_model
+            self.reranker_model,
+            self.tokenizer
         )
+
         # answer generation
         t3 = time.perf_counter()
 
