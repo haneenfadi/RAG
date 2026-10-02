@@ -11,7 +11,7 @@ class Settings:
     }
 
     pdf = {
-        "pdf_1": r"src\data\قانون_العمل_رقم_8_لسنة_1996_وتعديلاته.pdf",
+        "pdf_1": r"src\data\raw\قانون_العمل_رقم_8_لسنة_1996_وتعديلاته.pdf",
     }
 
     groq_api_key = os.getenv("GROQ_API_KEY")
